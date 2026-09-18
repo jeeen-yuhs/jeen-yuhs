@@ -25,9 +25,13 @@
             overflow: hidden;
         }
 
-        /* Plus / Minus button */
+        /* =========================
+           PLUS / MINUS BUTTON
+        ========================= */
+
         #sizeButton {
             position: fixed;
+
             top: 22px;
             left: 22px;
 
@@ -50,9 +54,9 @@
             touch-action: manipulation;
         }
 
-        /* Symbol */
         .symbol {
             position: relative;
+
             width: 16px;
             height: 16px;
 
@@ -65,6 +69,7 @@
             content: "";
 
             position: absolute;
+
             top: 50%;
             left: 50%;
 
@@ -100,9 +105,13 @@
                 scaleY(0);
         }
 
-        /* Text area */
+
+        /* =========================
+           TEXT WRAPPER
+        ========================= */
+
         #textWrapper {
-            position: absolute;
+            position: fixed;
 
             top: 50%;
             left: 50%;
@@ -110,15 +119,23 @@
             transform: translate(-50%, -50%);
 
             width: 40px;
-            height: 40px;
+            height: 50px;
 
-            overflow: visible;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            overflow: hidden;
 
             transition:
                 width 0.6s cubic-bezier(0.65, 0, 0.35, 1);
         }
 
-        /* Text */
+
+        /* =========================
+           TEXT
+        ========================= */
+
         #mainText {
             position: absolute;
 
@@ -127,17 +144,28 @@
 
             transform: translate(-50%, -50%);
 
+            margin: 0;
+
             white-space: nowrap;
-            text-align: center;
 
             font-size: 22px;
             font-weight: 700;
+
             line-height: 1;
 
             color: #000000;
+
+            /*
+             * The text itself does NOT move.
+             * It stays exactly at the center.
+             */
         }
 
-        /* Desktop expanded */
+
+        /* =========================
+           EXPANDED STATE
+        ========================= */
+
         #textWrapper.expanded {
             width: min(620px, calc(100vw - 32px));
         }
@@ -147,7 +175,11 @@
             font-weight: 400;
         }
 
-        /* Mobile */
+
+        /* =========================
+           MOBILE
+        ========================= */
+
         @media (max-width: 600px) {
 
             #sizeButton {
@@ -155,30 +187,45 @@
                 left: 18px;
             }
 
+            #textWrapper {
+                width: 40px;
+            }
+
             #textWrapper.expanded {
+                /*
+                 * Always leave equal space
+                 * on both sides of the screen.
+                 */
                 width: calc(100vw - 20px);
+            }
+
+            #mainText {
+                font-size: 20px;
             }
 
             #mainText.expanded {
                 /*
-                    Automatically scale the sentence
-                    to fit the phone width.
-                */
-                font-size: clamp(
-                    12px,
-                    5.5vw,
-                    28px
-                );
-
+                 * Smaller font on phones,
+                 * but it remains centered.
+                 */
+                font-size: 5vw;
                 font-weight: 400;
             }
         }
 
-        /* Extra small phones */
+
+        /* =========================
+           VERY SMALL PHONES
+        ========================= */
+
         @media (max-width: 380px) {
 
+            #textWrapper.expanded {
+                width: calc(100vw - 12px);
+            }
+
             #mainText.expanded {
-                font-size: 14px;
+                font-size: 4.5vw;
             }
         }
     </style>
@@ -193,6 +240,7 @@
     <div id="textWrapper">
         <div id="mainText">one</div>
     </div>
+
 
     <script>
         const button = document.getElementById("sizeButton");
