@@ -109,16 +109,10 @@
 
             transform: translate(-50%, -50%);
 
+            width: 40px;
             height: 40px;
 
-            /*
-                Keep space on both sides so the text
-                doesn't touch the edge on mobile.
-            */
-            width: 40px;
-            max-width: calc(100vw - 32px);
-
-            overflow: hidden;
+            overflow: visible;
 
             transition:
                 width 0.6s cubic-bezier(0.65, 0, 0.35, 1);
@@ -143,7 +137,7 @@
             color: #000000;
         }
 
-        /* Expanded */
+        /* Desktop expanded */
         #textWrapper.expanded {
             width: min(620px, calc(100vw - 32px));
         }
@@ -161,28 +155,30 @@
                 left: 18px;
             }
 
-            #textWrapper {
-                height: 38px;
-            }
-
-            #mainText {
-                font-size: 20px;
+            #textWrapper.expanded {
+                width: calc(100vw - 20px);
             }
 
             #mainText.expanded {
-                font-size: clamp(18px, 6vw, 28px);
+                /*
+                    Automatically scale the sentence
+                    to fit the phone width.
+                */
+                font-size: clamp(
+                    12px,
+                    5.5vw,
+                    28px
+                );
+
+                font-weight: 400;
             }
         }
 
-        /* Very small phones */
+        /* Extra small phones */
         @media (max-width: 380px) {
 
-            #textWrapper.expanded {
-                width: calc(100vw - 24px);
-            }
-
             #mainText.expanded {
-                font-size: 17px;
+                font-size: 14px;
             }
         }
     </style>
