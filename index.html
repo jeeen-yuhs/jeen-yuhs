@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>One</title>
+    <title>jeen-yuhs</title>
 
     <style>
         * {
@@ -15,12 +15,12 @@
         body {
             width: 100%;
             height: 100%;
+            margin: 0;
         }
 
         body {
-            margin: 0;
-            background-color: #f2f2f2;
-            color: #000000;
+            background: #f2f2f2;
+            color: #000;
             font-family: Arial, Helvetica, sans-serif;
             overflow: hidden;
         }
@@ -39,6 +39,8 @@
             height: 24px;
 
             padding: 0;
+            margin: 0;
+
             border: none;
             background: transparent;
 
@@ -56,12 +58,8 @@
 
         .symbol {
             position: relative;
-
             width: 16px;
             height: 16px;
-
-            transition:
-                transform 0.6s cubic-bezier(0.65, 0, 0.35, 1);
         }
 
         .symbol::before,
@@ -74,15 +72,11 @@
             left: 50%;
 
             width: 15px;
-            height: 1.9px;
+            height: 2px;
 
-            background-color: #000000;
+            background: #000;
 
             transform: translate(-50%, -50%);
-
-            transition:
-                transform 0.6s cubic-bezier(0.65, 0, 0.35, 1),
-                opacity 0.35s ease;
         }
 
         .symbol::after {
@@ -91,44 +85,30 @@
                 rotate(90deg);
         }
 
-        /* Plus → Minus */
-        #sizeButton.active .symbol {
-            transform: rotate(180deg);
-        }
+        /* PLUS → MINUS */
 
         #sizeButton.active .symbol::after {
-            opacity: 0;
-
-            transform:
-                translate(-50%, -50%)
-                rotate(90deg)
-                scaleY(0);
+            display: none;
         }
 
 
         /* =========================
-           TEXT WRAPPER
+           CENTER
         ========================= */
 
-        #textWrapper {
+        #center {
             position: fixed;
 
-            top: 50%;
-            left: 50%;
+            inset: 0;
 
-            transform: translate(-50%, -50%);
-
-            width: 40px;
-            height: 50px;
+            width: 100%;
+            height: 100%;
 
             display: flex;
             align-items: center;
             justify-content: center;
 
             overflow: hidden;
-
-            transition:
-                width 0.6s cubic-bezier(0.65, 0, 0.35, 1);
         }
 
 
@@ -137,41 +117,26 @@
         ========================= */
 
         #mainText {
-            position: absolute;
-
-            top: 50%;
-            left: 50%;
-
-            transform: translate(-50%, -50%);
-
             margin: 0;
+            padding: 0;
 
             white-space: nowrap;
+
+            text-align: center;
 
             font-size: 22px;
             font-weight: 700;
 
             line-height: 1;
-
-            color: #000000;
-
-            /*
-             * The text itself does NOT move.
-             * It stays exactly at the center.
-             */
         }
 
 
         /* =========================
-           EXPANDED STATE
+           EXPANDED
         ========================= */
 
-        #textWrapper.expanded {
-            width: min(620px, calc(100vw - 32px));
-        }
-
         #mainText.expanded {
-            font-size: 32px;
+            font-size: clamp(18px, 3vw, 32px);
             font-weight: 400;
         }
 
@@ -187,45 +152,44 @@
                 left: 18px;
             }
 
-            #textWrapper {
-                width: 40px;
-            }
-
-            #textWrapper.expanded {
-                /*
-                 * Always leave equal space
-                 * on both sides of the screen.
-                 */
-                width: calc(100vw - 20px);
-            }
-
             #mainText {
                 font-size: 20px;
             }
 
             #mainText.expanded {
-                /*
-                 * Smaller font on phones,
-                 * but it remains centered.
-                 */
-                font-size: 5vw;
-                font-weight: 400;
+                font-size: clamp(16px, 5vw, 28px);
             }
         }
 
 
         /* =========================
-           VERY SMALL PHONES
+           TABLET
         ========================= */
 
-        @media (max-width: 380px) {
+        @media (min-width: 601px) and (max-width: 1024px) {
 
-            #textWrapper.expanded {
-                width: calc(100vw - 12px);
+            #mainText {
+                font-size: 22px;
             }
 
             #mainText.expanded {
-                font-size: 4.5vw;
+                font-size: clamp(20px, 4vw, 30px);
+            }
+        }
+
+
+        /* =========================
+           DESKTOP / LAPTOP
+        ========================= */
+
+        @media (min-width: 1025px) {
+
+            #mainText {
+                font-size: 22px;
+            }
+
+            #mainText.expanded {
+                font-size: clamp(24px, 3vw, 32px);
             }
         }
     </style>
@@ -233,18 +197,22 @@
 
 <body>
 
-    <button id="sizeButton" aria-label="Expand text">
+    <button
+        id="sizeButton"
+        aria-label="Expand text"
+        type="button"
+    >
         <span class="symbol"></span>
     </button>
 
-    <div id="textWrapper">
-        <div id="mainText">one</div>
-    </div>
+
+    <main id="center">
+        <p id="mainText">jeen-yuhs</p>
+    </main>
 
 
     <script>
         const button = document.getElementById("sizeButton");
-        const wrapper = document.getElementById("textWrapper");
         const text = document.getElementById("mainText");
 
         let expanded = false;
@@ -259,8 +227,6 @@
                     "will it ever be available to the public";
 
                 text.classList.add("expanded");
-                wrapper.classList.add("expanded");
-
                 button.classList.add("active");
 
                 button.setAttribute(
@@ -270,11 +236,9 @@
 
             } else {
 
-                text.textContent = "one";
+                text.textContent = "jeen-yuhs";
 
                 text.classList.remove("expanded");
-                wrapper.classList.remove("expanded");
-
                 button.classList.remove("active");
 
                 button.setAttribute(
