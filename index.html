@@ -19,8 +19,8 @@
         }
 
         body {
-            background: #f2f2f2;
-            color: #000;
+            background-color: #f2f2f2;
+            color: #000000;
             font-family: Arial, Helvetica, sans-serif;
             overflow: hidden;
         }
@@ -42,6 +42,7 @@
             margin: 0;
 
             border: none;
+            outline: none;
             background: transparent;
 
             cursor: pointer;
@@ -58,8 +59,12 @@
 
         .symbol {
             position: relative;
+
             width: 16px;
             height: 16px;
+
+            transition:
+                transform 0.6s cubic-bezier(0.65, 0, 0.35, 1);
         }
 
         .symbol::before,
@@ -72,12 +77,18 @@
             left: 50%;
 
             width: 15px;
-            height: 2px;
+            height: 1.9px;
 
-            background: #000;
+            background-color: #000000;
 
             transform: translate(-50%, -50%);
+
+            transition:
+                transform 0.6s cubic-bezier(0.65, 0, 0.35, 1),
+                opacity 0.35s ease;
         }
+
+        /* Vertical line */
 
         .symbol::after {
             transform:
@@ -85,15 +96,26 @@
                 rotate(90deg);
         }
 
-        /* PLUS → MINUS */
+        /* =========================
+           PLUS → MINUS ANIMATION
+        ========================= */
+
+        #sizeButton.active .symbol {
+            transform: rotate(180deg);
+        }
 
         #sizeButton.active .symbol::after {
-            display: none;
+            opacity: 0;
+
+            transform:
+                translate(-50%, -50%)
+                rotate(90deg)
+                scaleY(0);
         }
 
 
         /* =========================
-           CENTER
+           PERFECT CENTER
         ========================= */
 
         #center {
@@ -132,7 +154,8 @@
 
 
         /* =========================
-           EXPANDED
+           EXPANDED TEXT
+           NO ANIMATION
         ========================= */
 
         #mainText.expanded {
@@ -179,7 +202,7 @@
 
 
         /* =========================
-           DESKTOP / LAPTOP
+           LAPTOP / DESKTOP
         ========================= */
 
         @media (min-width: 1025px) {
